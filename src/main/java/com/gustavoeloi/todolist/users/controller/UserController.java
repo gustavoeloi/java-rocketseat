@@ -1,7 +1,8 @@
-package com.gustavoeloi.todolist.controller;
+package com.gustavoeloi.todolist.users.controller;
 
-import com.gustavoeloi.todolist.model.UserModel;
-import com.gustavoeloi.todolist.repository.UserRepository;
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.gustavoeloi.todolist.users.model.UserModel;
+import com.gustavoeloi.todolist.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,11 @@ public class UserController {
         if (userName != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O nome de usuário já existe!");
         }
+
+
+        //Antes de enviar o nosso usuário, iremos criptografar a senha enviada.
+        String password = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
+        userModel.setPassword(password);
 
         var usuario = this.userRepository.save(userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);

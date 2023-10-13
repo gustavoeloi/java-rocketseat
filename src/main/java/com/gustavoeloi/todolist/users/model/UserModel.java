@@ -1,4 +1,4 @@
-package com.gustavoeloi.todolist.model;
+package com.gustavoeloi.todolist.users.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

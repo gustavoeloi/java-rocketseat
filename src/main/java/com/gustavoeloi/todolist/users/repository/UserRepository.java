@@ -1,6 +1,6 @@
-package com.gustavoeloi.todolist.repository;
+package com.gustavoeloi.todolist.users.repository;
 
-import com.gustavoeloi.todolist.model.UserModel;
+import com.gustavoeloi.todolist.users.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

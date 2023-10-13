@@ -1,5 +1,6 @@
 package com.gustavoeloi.todolist.tasks.controller;
 
+import com.gustavoeloi.todolist.Utils.Utils;
 import com.gustavoeloi.todolist.tasks.model.TaskModel;
 import com.gustavoeloi.todolist.tasks.repository.TaskRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,11 +51,10 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskModel update(@PathVariable UUID id, @RequestBody TaskModel taskModel, HttpServletRequest request){
-        var idUser = request.getAttribute("userId");
-        taskModel.setUserId((UUID) idUser);
-        taskModel.setId(id);
-        return this.taskRepository.save(taskModel);
+    public TaskModel update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request){
+        var task = this.taskRepository.findById(id).orElse(null);
+        Utils.copyNonNullProperties(taskModel, task);
+        return this.taskRepository.save(task);
     }
 
 

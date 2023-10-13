@@ -1,12 +1,15 @@
-package com.gustavoeloi.todolist.tasks;
+package com.gustavoeloi.todolist.tasks.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
 @Entity(name = "TB_TASKS")
 public class TaskModel {
     @Id

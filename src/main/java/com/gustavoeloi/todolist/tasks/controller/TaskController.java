@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -40,5 +41,21 @@ public class TaskController {
         var task = this.taskRepository.save(taskModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
+
+    @GetMapping("/")
+    public ResponseEntity<List<TaskModel>> list(HttpServletRequest request){
+        var requestUserId = request.getAttribute("userId");
+        var tasks = this.taskRepository.findByUserId((UUID) requestUserId);
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
+    }
+
+    @PutMapping("/{id}")
+    public TaskModel update(@PathVariable UUID id, @RequestBody TaskModel taskModel, HttpServletRequest request){
+        var idUser = request.getAttribute("userId");
+        taskModel.setUserId((UUID) idUser);
+        taskModel.setId(id);
+        return this.taskRepository.save(taskModel);
+    }
+
 
 }

@@ -60,7 +60,7 @@ public class TaskController {
         }
 
         if(!task.getUserId().equals(userId)){
-            return ResponseEntity.badRequest().body("Essa tarefa  não pertence a você!");
+            return ResponseEntity.badRequest().body("O usuário não tem permissão para alterar essa tarefa");
         }
 
         Utils.copyNonNullProperties(taskModel, task);
